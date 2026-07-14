@@ -277,7 +277,77 @@ export const slateTheme: DesktopTheme = {
   }
 }
 
+const COLOSS_ACCENT = '#c96442'
+const COLOSS_ACCENT_DARK = '#d97757'
+
+/**
+ * Coloss — de COLOSS/Seven Research identiteit (branding-laag van de fork).
+ * Warm Claude-achtig palet: cream-achtergronden, terracotta-accent; dark is
+ * warm antraciet. Puur interface — raakt geen functionaliteit (zie FORK.md).
+ * De naam sluit aan op de CLI-skin `coloss` (skins/coloss.yaml in voneu).
+ */
+export const colossTheme: DesktopTheme = {
+  name: 'coloss',
+  label: 'Coloss',
+  description: 'Warm cream with terracotta accents — the Coloss identity',
+  colors: {
+    background: '#faf9f5',
+    foreground: '#3d3929',
+    card: '#ffffff',
+    cardForeground: '#3d3929',
+    muted: '#f0eee5',
+    mutedForeground: '#8f8b7e',
+    popover: '#ffffff',
+    popoverForeground: '#3d3929',
+    primary: COLOSS_ACCENT,
+    primaryForeground: '#ffffff',
+    secondary: '#f0eee5',
+    secondaryForeground: '#4a4438',
+    accent: '#f5ede6',
+    accentForeground: '#3d3929',
+    border: '#e8e4d8',
+    input: '#e0dbc9',
+    ring: COLOSS_ACCENT,
+    midground: COLOSS_ACCENT,
+    composerRing: COLOSS_ACCENT,
+    destructive: '#c0392b',
+    destructiveForeground: '#ffffff',
+    sidebarBackground: '#f5f3ec',
+    sidebarBorder: '#e8e4d8',
+    userBubble: '#f0eee5',
+    userBubbleBorder: '#e0dbc9'
+  },
+  darkColors: {
+    background: '#262421',
+    foreground: '#f5efe6',
+    card: '#2d2a26',
+    cardForeground: '#f5efe6',
+    muted: '#33302b',
+    mutedForeground: '#c9bfb2',
+    popover: '#2d2a26',
+    popoverForeground: '#f5efe6',
+    primary: COLOSS_ACCENT_DARK,
+    primaryForeground: '#1f1d1a',
+    secondary: '#3d3833',
+    secondaryForeground: '#e8e0d0',
+    accent: '#3d332c',
+    accentForeground: '#f0e6d8',
+    border: '#3d3833',
+    input: '#4a443c',
+    ring: COLOSS_ACCENT_DARK,
+    midground: COLOSS_ACCENT_DARK,
+    composerRing: COLOSS_ACCENT_DARK,
+    destructive: '#e5695e',
+    destructiveForeground: '#fef2f2',
+    sidebarBackground: '#211f1c',
+    sidebarBorder: '#33302b',
+    userBubble: '#33302b',
+    userBubbleBorder: '#4a443c'
+  }
+}
+
 export const BUILTIN_THEMES: Record<string, DesktopTheme> = {
+  coloss: colossTheme,
   nous: nousTheme,
   midnight: midnightTheme,
   ember: emberTheme,
@@ -289,4 +359,4 @@ export const BUILTIN_THEMES: Record<string, DesktopTheme> = {
 export const BUILTIN_THEME_LIST = Object.values(BUILTIN_THEMES)
 
 /** Skin used when nothing is persisted or the persisted name is retired. */
-export const DEFAULT_SKIN_NAME = 'nous'
+export const DEFAULT_SKIN_NAME = 'coloss'
