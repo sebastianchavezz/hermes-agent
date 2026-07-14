@@ -50,12 +50,12 @@ export const zhHant: Translations = {
   },
 
   app: {
-    brand: "Hermes Agent",
-    brandShort: "HA",
+    brand: "Coloss",
+    brandShort: "CO",
     closeNavigation: "關閉導覽",
     closeModelTools: "關閉模型與工具",
     footer: {
-      org: "Nous Research",
+      org: "Seven Research",
     },
     activeSessionsLabel: "使用中工作階段：",
     gatewayStatusLabel: "閘道狀態：",

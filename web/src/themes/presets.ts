@@ -40,7 +40,7 @@ const DEFAULT_LAYOUT: ThemeLayout = {
 
 export const defaultTheme: DashboardTheme = {
   name: "default",
-  label: "Hermes Teal",
+  label: "Coloss Teal",
   description: "Classic dark teal — the canonical Hermes look",
   palette: {
     background: { hex: "#041c1c", alpha: 1 },
@@ -214,8 +214,8 @@ export const nousBlueTheme: DashboardTheme = {
  */
 export const defaultLargeTheme: DashboardTheme = {
   name: "default-large",
-  label: "Hermes Teal (Large)",
-  description: "Hermes Teal with bigger fonts and roomier spacing",
+  label: "Coloss Teal (Large)",
+  description: "Coloss Teal with bigger fonts and roomier spacing",
   palette: defaultTheme.palette,
   typography: {
     ...DEFAULT_TYPOGRAPHY,

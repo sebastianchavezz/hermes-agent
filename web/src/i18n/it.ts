@@ -50,12 +50,12 @@ export const it: Translations = {
   },
 
   app: {
-    brand: "Hermes Agent",
-    brandShort: "HA",
+    brand: "Coloss",
+    brandShort: "CO",
     closeNavigation: "Chiudi navigazione",
     closeModelTools: "Chiudi modello e strumenti",
     footer: {
-      org: "Nous Research",
+      org: "Seven Research",
     },
     activeSessionsLabel: "Sessioni attive:",
     gatewayStatusLabel: "Stato gateway:",
