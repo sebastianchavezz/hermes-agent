@@ -46,26 +46,35 @@ import { useProfileScope } from "@/contexts/useProfileScope";
 // ``rotate`` mints a new token — used when the user explicitly starts a fresh
 // session so the old keep-alive PTY is NOT reattached (the registry reaps it).
 const PTY_ATTACH_TOKEN_KEY = "hermes.pty.token.chat";
-function ptyAttachToken(rotate = false): string {
-  let t = "";
+// COLOSS fork-diff (voneu-base, 15-07): scope the keep-alive token to the
+// resume target. Upstream reattaches to the ONE living PTY regardless of the
+// sidebar's ?resume, so clicking an old session silently reattached to the
+// current one and never resumed the picked session (attach_or_spawn honours
+// the token, drops the resume). Deriving the token as ``<base>:<resumeTarget>``
+// gives each resumed session its own keep-alive PTY: clicking a session spawns
+// a fresh PTY that resumes it, while a refresh on the same ?resume keeps the
+// same token and reattaches (keep-alive preserved). The blank (no-resume) tab
+// keeps the bare base token, so New-chat behaviour is unchanged.
+function ptyAttachToken(rotate = false, resumeTarget = ""): string {
+  let base = "";
   if (!rotate) {
     try {
-      t = window.localStorage.getItem(PTY_ATTACH_TOKEN_KEY) ?? "";
+      base = window.localStorage.getItem(PTY_ATTACH_TOKEN_KEY) ?? "";
     } catch {
       /* private mode / storage blocked */
     }
   }
-  if (!t) {
+  if (!base) {
     const a = new Uint8Array(16);
     crypto.getRandomValues(a);
-    t = Array.from(a, (b) => b.toString(16).padStart(2, "0")).join("");
+    base = Array.from(a, (b) => b.toString(16).padStart(2, "0")).join("");
     try {
-      window.localStorage.setItem(PTY_ATTACH_TOKEN_KEY, t);
+      window.localStorage.setItem(PTY_ATTACH_TOKEN_KEY, base);
     } catch {
       /* ignore */
     }
   }
-  return t;
+  return resumeTarget ? `${base}:${resumeTarget}` : base;
 }
 
 // Channel id ties this chat tab's PTY child (publisher) to its sidebar
@@ -710,7 +719,10 @@ export default function ChatPage({ isActive = true }: { isActive?: boolean }) {
       // Keep-alive identity: reattach to this tab's living PTY across
       // refresh/transient drops. A forced-fresh start rotates the token so
       // the previous keep-alive PTY is not reattached (registry reaps it).
-      params.attach = ptyAttachToken(forceFresh);
+      // COLOSS fork-diff (15-07): scope the token to resumeParam so clicking a
+      // sidebar session spawns a fresh PTY that resumes it, instead of
+      // reattaching to the current live PTY (which drops the resume).
+      params.attach = ptyAttachToken(forceFresh, resumeParam ?? "");
       // Profile-scoped chat: the PTY child gets HERMES_HOME pointed at the
       // selected profile, so the conversation runs with that profile's model,
       // skills, memory, and sessions (see web_server._resolve_chat_argv).
